@@ -11,7 +11,9 @@ fun main() {
         for(i in 0 until depths.size - 1) {
 
             if(depths[i+1] > depths[i]) {
+
                 count++
+
             }
 
         }
@@ -27,11 +29,10 @@ fun main() {
 
         for(i in 0 until depths.size - 3) {
 
-            val thisWindowSum = depths[i] + depths[i+1] + depths[i+2]
-            val nextWindowSum = depths[i+1] + depths[i+2] + depths[i+3]
+            if(depths.subList(i+1, i+3).sum() > depths.subList(i, i+2).sum()) {
 
-            if(nextWindowSum > thisWindowSum) {
                 count++
+
             }
 
         }
