@@ -1,7 +1,12 @@
+package dev.tasso.adventofcode2021.day01
+
+import dev.tasso.adventofcode2021.readInput
+
 fun main() {
 
     // test if implementation meets criteria from the description, like:
     val testInput = readInput("Day01_test")
+    println(testInput)
     check(part1(testInput) == 7)
     check(part2(testInput) == 5)
 
