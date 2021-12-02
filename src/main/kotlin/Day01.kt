@@ -1,8 +1,3 @@
-import one.util.streamex.StreamEx
-import java.util.stream.IntStream
-import java.util.stream.Stream
-import kotlin.streams.toList
-
 fun main() {
 
     // test if implementation meets criteria from the description, like:
@@ -17,34 +12,13 @@ fun main() {
 }
 
 fun part1(input: List<String>): Int =
-    input.stream()
-         .map(String::toInt)
-         .asStreamEx()
-         .pairMap{ previousDepth, currentDepth -> currentDepth > previousDepth}
-         .filter{b -> b}
-         .count()
-         .toInt()
+    input.map{ it.toInt() }
+         .windowed(2)
+         .count{ it[1] > it[0] }
 
 fun part2(input: List<String>): Int =
-    input.stream()
-         .map(String::toInt)
-         .ofSlidingWindowSubLists(3)
-         .asStreamEx()
-         .pairMap{ previousDepths, currentDepths -> currentDepths.sum() > previousDepths.sum()}
-         .filter{b -> b}
-         .count()
-         .toInt()
-
-fun <T> Stream<T>.asStreamEx() : StreamEx<T> = StreamEx.of(this)
-
-fun <T> Stream<T>.ofSlidingWindowSubLists(windowSize: Int) : Stream<List<T>> {
-
-    val list = this.toList()
-
-    return if(windowSize > list.size)
-        Stream.empty()
-    else
-        IntStream.range(0, list.size - windowSize + 1)
-                 .mapToObj{ start -> list.subList(start, start+windowSize) }
-
-}
+    input.map{ it.toInt() }
+         .windowed(3)
+         .map{ it.sum() }
+         .windowed(2)
+         .count{ it[1] > it[0] }
