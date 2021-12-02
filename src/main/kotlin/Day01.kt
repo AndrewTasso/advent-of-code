@@ -1,44 +1,9 @@
+import one.util.streamex.StreamEx
+import java.util.stream.IntStream
+import java.util.stream.Stream
 import kotlin.streams.toList
 
 fun main() {
-
-    fun part1(input: List<String>): Int {
-
-        var count = 0
-
-        val depths = input.stream().mapToInt(String::toInt).toList()
-
-        for(i in 0 until depths.size - 1) {
-
-            if(depths[i+1] > depths[i]) {
-
-                count++
-
-            }
-
-        }
-
-        return count
-    }
-
-    fun part2(input: List<String>): Int {
-
-        var count = 0
-
-        val depths = input.stream().mapToInt(String::toInt).toList()
-
-        for(i in 0 until depths.size - 3) {
-
-            if(depths.subList(i+1, i+3).sum() > depths.subList(i, i+2).sum()) {
-
-                count++
-
-            }
-
-        }
-
-        return count
-    }
 
     // test if implementation meets criteria from the description, like:
     val testInput = readInput("Day01_test")
@@ -48,4 +13,38 @@ fun main() {
     val input = readInput("Day01")
     println("Part 1: ${part1(input)}")
     println("Part 2: ${part2(input)}")
+
+}
+
+fun part1(input: List<String>): Int =
+    input.stream()
+         .map(String::toInt)
+         .asStreamEx()
+         .pairMap{ previousDepth, currentDepth -> currentDepth > previousDepth}
+         .filter{b -> b}
+         .count()
+         .toInt()
+
+fun part2(input: List<String>): Int =
+    input.stream()
+         .map(String::toInt)
+         .ofSlidingWindowSubLists(3)
+         .asStreamEx()
+         .pairMap{ previousDepths, currentDepths -> currentDepths.sum() > previousDepths.sum()}
+         .filter{b -> b}
+         .count()
+         .toInt()
+
+fun <T> Stream<T>.asStreamEx() : StreamEx<T> = StreamEx.of(this)
+
+fun <T> Stream<T>.ofSlidingWindowSubLists(windowSize: Int) : Stream<List<T>> {
+
+    val list = this.toList()
+
+    return if(windowSize > list.size)
+        Stream.empty()
+    else
+        IntStream.range(0, list.size - windowSize + 1)
+                 .mapToObj{ start -> list.subList(start, start+windowSize) }
+
 }
