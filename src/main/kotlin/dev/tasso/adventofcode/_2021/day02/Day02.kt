@@ -1,6 +1,6 @@
-package dev.tasso.adventofcode2021.day02
+package dev.tasso.adventofcode._2021.day02
 
-import dev.tasso.adventofcode2021.readInput
+import dev.tasso.adventofcode._2021.readInput
 import kotlin.math.absoluteValue
 
 
