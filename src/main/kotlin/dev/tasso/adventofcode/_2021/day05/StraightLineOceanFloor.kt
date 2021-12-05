@@ -3,7 +3,7 @@ package dev.tasso.adventofcode._2021.day05
 import java.lang.Integer.min
 import java.lang.Integer.max
 
-class OceanFloor(width: Int, height: Int) {
+class StraightLineOceanFloor(width: Int, height: Int) {
 
     private val floorMap: Array<IntArray> =
         IntRange(0, width-1).map { IntRange(0, height-1).map { 0 }.toIntArray() }.toList().toTypedArray()

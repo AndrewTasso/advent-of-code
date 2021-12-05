@@ -8,11 +8,11 @@ fun main() {
     // test if implementation meets criteria from the description, like:
     val testInput = readInput("Day05_test")
     check(part1(testInput) == 5)
-//    check(part2(testInput) == 10)
+    check(part2(testInput) == 12)
 
     val input = readInput("Day05")
     println("Part 1: ${part1(input)}")
-//    println("Part 2: ${part2(input)}")
+    println("Part 2: ${part2(input)}")
 
 }
 
@@ -24,7 +24,7 @@ fun part1(input: List<String>): Int {
     val floorWidth = ventLines.maxOf { max(it.startCoordinate.x, it.endCoordinate.x) + 1  }
     val floorHeight = ventLines.maxOf { max(it.startCoordinate.y, it.endCoordinate.y) + 1  }
 
-    val oceanFloor = OceanFloor(floorWidth, floorHeight)
+    val oceanFloor = StraightLineOceanFloor(floorWidth, floorHeight)
 
     ventLines.forEach { oceanFloor.addVent(it) }
 
@@ -34,7 +34,17 @@ fun part1(input: List<String>): Int {
 
 fun part2(input: List<String>): Int {
 
-    return input.size
+    val ventLines = input.map { it.split(" -> ").map{it.split(",").map { it.toInt() }}}
+                         .map { Line(Coordinate(it.first().first(), it.first().last()), Coordinate(it.last().first(), it.last().last())) }
+
+    val floorWidth = ventLines.maxOf { max(it.startCoordinate.x, it.endCoordinate.x) + 1  }
+    val floorHeight = ventLines.maxOf { max(it.startCoordinate.y, it.endCoordinate.y) + 1  }
+
+    val oceanFloor = DiagonalLineOceanFloor(floorWidth, floorHeight)
+
+    ventLines.forEach { oceanFloor.addVent(it) }
+
+    return oceanFloor.getNumOverlappingPoints()
 }
 
 
