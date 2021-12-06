@@ -1,6 +1,6 @@
-# advent-of-code-2021
+# advent-of-code
 
-Welcome to the Advent of Code[^aoc] Kotlin project created by [andrewtasso][github] using the [Advent of Code Kotlin Template][template] delivered by JetBrains.
+Welcome to the Advent of Code[^aoc] Kotlin project created by [Andrew Tasso][github] using the [Advent of Code Kotlin Template][template] delivered by JetBrains.
 
 In this repository, andrewtasso is about to provide solutions for the puzzles using [Kotlin][kotlin] language.
 
