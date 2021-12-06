@@ -1,80 +1,68 @@
 package dev.tasso.adventofcode._2021.day03
 
-import dev.tasso.adventofcode._2021.readInput
+import dev.tasso.adventofcode.Solution
 
-fun main() {
+class Day03 : Solution<Int> {
 
-    // test if implementation meets criteria from the description, like:
-    val testInput = readInput("Day03_test")
-    check(part1(testInput) == 198)
-    check(part2(testInput) == 230)
+    override fun part1(input: List<String>): Int {
 
-    val input = readInput("Day03")
-    println("Part 1: ${part1(input)}")
-    println("Part 2: ${part2(input)}")
+        var gammaString = ""
+        var epsilonString = ""
 
-}
+        for(i in 0 until input[0].length) {
 
-fun part1(input: List<String>): Int {
+            val (zeros, ones) = input.map{c -> c[i]}.partition {c -> c == '0' }
+            gammaString += if (zeros.size > ones.size) "0" else "1"
+            epsilonString += if (zeros.size < ones.size) "0" else "1"
+        }
 
-    var gammaString = ""
-    var epsilonString = ""
+        val gamma = Integer.parseInt(gammaString, 2)
+        val epsilon = Integer.parseInt(epsilonString, 2)
 
-    for(i in 0 until input[0].length) {
+        return  gamma * epsilon
 
-        val (zeros, ones) = input.map{c -> c[i]}.partition {c -> c == '0' }
-        gammaString += if (zeros.size > ones.size) "0" else "1"
-        epsilonString += if (zeros.size < ones.size) "0" else "1"
     }
 
-    val gamma = Integer.parseInt(gammaString, 2)
-    val epsilon = Integer.parseInt(epsilonString, 2)
+    override fun part2(input: List<String>): Int {
 
-    return  gamma * epsilon
+        var oxygenGeneratorValues = input.toList()
+        var co2ScrubberValues = input.toList()
 
-}
+        for(i in 0 until oxygenGeneratorValues[0].length) {
 
-fun part2(input: List<String>): Int {
+            oxygenGeneratorValues = if (oxygenGeneratorValues.count { s -> s[i] == '1' } >= oxygenGeneratorValues.count { s -> s[i] == '0' }) {
 
-    var oxygenGeneratorValues = input.toList()
-    var co2ScrubberValues = input.toList()
+                oxygenGeneratorValues.filter { s -> s[i] == '1' }
 
-    for(i in 0 until oxygenGeneratorValues[0].length) {
+            } else {
 
-        oxygenGeneratorValues = if (oxygenGeneratorValues.count { s -> s[i] == '1' } >= oxygenGeneratorValues.count { s -> s[i] == '0' }) {
+                oxygenGeneratorValues.filter { s -> s[i] == '0' }
 
-            oxygenGeneratorValues.filter { s -> s[i] == '1' }
+            }
 
-        } else {
-
-            oxygenGeneratorValues.filter { s -> s[i] == '0' }
+            if (oxygenGeneratorValues.size == 1) break
 
         }
 
-        if (oxygenGeneratorValues.size == 1) break
+        for(i in 0 until co2ScrubberValues[0].length) {
 
-    }
+            co2ScrubberValues = if (co2ScrubberValues.count { s -> s[i] == '0' } <= co2ScrubberValues.count { s -> s[i] == '1' }) {
 
-    for(i in 0 until co2ScrubberValues[0].length) {
+                co2ScrubberValues.filter { s -> s[i] == '0' }
 
-        co2ScrubberValues = if (co2ScrubberValues.count { s -> s[i] == '0' } <= co2ScrubberValues.count { s -> s[i] == '1' }) {
+            } else {
 
-            co2ScrubberValues.filter { s -> s[i] == '0' }
+                co2ScrubberValues.filter { s -> s[i] == '1' }
 
-        } else {
+            }
 
-            co2ScrubberValues.filter { s -> s[i] == '1' }
+            if (co2ScrubberValues.size == 1) break
 
         }
 
-        if (co2ScrubberValues.size == 1) break
+        val oxygenGeneratorRating = Integer.parseInt(oxygenGeneratorValues[0], 2)
+        val co2ScrubberRating = Integer.parseInt(co2ScrubberValues[0], 2)
 
+        return oxygenGeneratorRating * co2ScrubberRating
     }
-
-    val oxygenGeneratorRating = Integer.parseInt(oxygenGeneratorValues[0], 2)
-    val co2ScrubberRating = Integer.parseInt(co2ScrubberValues[0], 2)
-
-    return oxygenGeneratorRating * co2ScrubberRating
 }
-
-

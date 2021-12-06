@@ -1,30 +1,21 @@
 package dev.tasso.adventofcode._2021.day06
 
-import dev.tasso.adventofcode._2021.readInput
+import dev.tasso.adventofcode.Solution
 import java.math.BigInteger
 
-fun main() {
+class Day06 : Solution<BigInteger> {
 
-    // test if implementation meets criteria from the description, like:
-    val testInput = readInput("Day06_test")
-//    check(part1(testInput) == BigInteger.valueOf(5394))
-    check(part2(testInput) == BigInteger.valueOf(26984457539))
+    override fun part1(input: List<String>): BigInteger {
 
-    val input = readInput("Day06")
-    println("Part 1: ${part1(input)}")
-    println("Part 2: ${part2(input)}")
+        return(simulatePopulation(input, 80))
 
-}
+    }
 
-fun part1(input: List<String>): BigInteger {
+    override fun part2(input: List<String>): BigInteger {
 
-    return(simulatePopulation(input, 80))
+        return(simulatePopulation(input, 256))
 
-}
-
-fun part2(input: List<String>): BigInteger {
-
-    return(simulatePopulation(input, 256))
+    }
 
 }
 
