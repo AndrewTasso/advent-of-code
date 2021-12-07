@@ -1,4 +1,4 @@
-package dev.tasso.adventofcode._2021
+package dev.tasso.adventofcode
 
 import io.kotest.core.spec.style.behaviorSpec
 import io.kotest.matchers.shouldBe
