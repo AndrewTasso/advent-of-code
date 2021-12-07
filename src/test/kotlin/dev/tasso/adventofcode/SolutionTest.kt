@@ -9,9 +9,12 @@ fun <T> solutionTest(solutionPart: (List<String>) -> T,
 
     Given("A sample input file of $inputResourcePath") {
 
-        val input = this::class.java.classLoader.getResource(inputResourcePath)!!.readText().trim().split(System.lineSeparator())
+        val url = this::class.java.classLoader.getResource(inputResourcePath)
 
-        When("executing a the solution") {
+        val input = url?.readText()?.trim()?.split(System.lineSeparator())
+            ?: throw IllegalArgumentException("Failed to read content of test input file - $inputResourcePath")
+
+        When("executing the solution") {
             Then("a result of $expectedResult should be received") {
 
 
