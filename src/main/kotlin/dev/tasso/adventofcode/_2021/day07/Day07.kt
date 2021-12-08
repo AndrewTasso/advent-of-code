@@ -8,15 +8,21 @@ class Day07 : Solution<Int> {
     override fun part1(input: List<String>): Int {
 
         val positions = input[0].split(",").map { it.toInt() }
-        val lowestPosition = positions.minOrNull()!!
-        val highestPosition = positions.maxOrNull()!!
 
-        return (lowestPosition..highestPosition).minOf { currPosition -> positions.sumOf { abs(currPosition - it) } }
+        return (positions.minOrNull()!!..positions.maxOrNull()!!).minOf {
+            currPosition -> positions.sumOf { abs(currPosition - it) }
+        }
 
     }
 
     override fun part2(input: List<String>): Int {
-        TODO("Not yet implemented")
+
+        val positions = input[0].split(",").map{ it.toInt() }
+
+        return (positions.minOrNull()!!..positions.maxOrNull()!!).toList().map{ currPosition ->
+            positions.map{ (1..abs(currPosition - it)).fold(0){ acc, i -> acc + i}}.sum()
+        }.minOrNull()!!
+
     }
 
 }
