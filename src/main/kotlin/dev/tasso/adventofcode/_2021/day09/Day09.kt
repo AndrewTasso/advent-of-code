@@ -7,31 +7,48 @@ class Day09 : Solution<Int> {
 
         val heightMap = input.map{ row -> row.toCharArray().map { it.digitToInt() }.toTypedArray()}.toTypedArray()
 
-        var riskLevel = 0
-
-        heightMap.forEachIndexed { rowIndex, row ->
-            row.forEachIndexed { colIndex, height ->
-                val adjacentHeights = setOfNotNull(
-                    //North
-                    if(rowIndex > 0) heightMap[rowIndex-1][colIndex] else null,
-                    //South
-                    if(rowIndex < heightMap.size-1) heightMap[rowIndex+1][colIndex] else null,
-                    //West
-                    if(colIndex > 0) heightMap[rowIndex][colIndex-1] else null,
-                    //East
-                    if(colIndex < heightMap[0].size-1) heightMap[rowIndex][colIndex+1] else null
-                )
-
-                if(adjacentHeights.all{ adjacentHeight -> adjacentHeight > height}) {
-                    riskLevel += height + 1
-                }
-            }
+        return determineLowPointCoordinates(heightMap).sumOf {
+                (rowIndex, colIndex) -> heightMap[rowIndex][colIndex] + 1
         }
 
-        return riskLevel
     }
 
     override fun part2(input: List<String>): Int {
         TODO("Not yet implemented")
     }
+}
+
+fun determineLowPointCoordinates(heightMap : Array<Array<Int>>): MutableList<Pair<Int, Int>> {
+
+    val lowPointCoordinates = mutableListOf<Pair<Int,Int>>()
+
+    heightMap.forEachIndexed { rowIndex, row ->
+        row.forEachIndexed { colIndex, height ->
+
+            val adjacentCoordinate = getAdjacentCoordinates(heightMap, rowIndex, colIndex)
+
+            if(adjacentCoordinate.all{ (col,row) -> heightMap[col][row] > height}) {
+                lowPointCoordinates.add(Pair(rowIndex,colIndex))
+            }
+
+        }
+    }
+
+    return lowPointCoordinates
+
+}
+
+fun getAdjacentCoordinates(heightMap : Array<Array<Int>>, rowIndex : Int, colIndex : Int): List<Pair<Int,Int>> {
+
+    return listOfNotNull(
+        //North
+        if(rowIndex > 0) Pair(rowIndex-1,colIndex) else null,
+        //South
+        if(rowIndex < heightMap.size-1) Pair(rowIndex+1,colIndex) else null,
+        //West
+        if(colIndex > 0) Pair(rowIndex,colIndex-1) else null,
+        //East
+        if(colIndex < heightMap[0].size-1) Pair(rowIndex, colIndex+1) else null
+    )
+
 }
