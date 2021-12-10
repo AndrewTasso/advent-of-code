@@ -7,7 +7,7 @@ class Day09 : Solution<Int> {
 
         val heightMap = input.map{ row -> row.toCharArray().map { it.digitToInt() }.toTypedArray() }.toTypedArray()
 
-        return determineLowPointCoordinates(heightMap).sumOf {
+        return getLowPointCoordinates(heightMap).sumOf {
                 (rowIndex, colIndex) -> heightMap[rowIndex][colIndex] + 1
         }
 
@@ -17,17 +17,15 @@ class Day09 : Solution<Int> {
 
         val heightMap = input.map{ row -> row.toCharArray().map { it.digitToInt() }.toTypedArray() }.toTypedArray()
 
-        val lowPoints = determineLowPointCoordinates(heightMap)
-
-        return lowPoints.map{ lowPointCoords -> getBasinSize(heightMap, lowPointCoords) }
-                        .sorted()
-                        .takeLast(3)
-                        .reduce { acc, i ->  acc * i }
+        return getLowPointCoordinates(heightMap).map{ lowPointCoords -> getBasinSize(heightMap, lowPointCoords) }
+                                                .sorted()
+                                                .takeLast(3)
+                                                .reduce { acc, i ->  acc * i }
 
     }
 }
 
-fun determineLowPointCoordinates(heightMap : Array<Array<Int>>): MutableList<Pair<Int, Int>> {
+fun getLowPointCoordinates(heightMap : Array<Array<Int>>): List<Pair<Int, Int>> {
 
     val lowPointCoordinates = mutableListOf<Pair<Int,Int>>()
 
@@ -43,7 +41,7 @@ fun determineLowPointCoordinates(heightMap : Array<Array<Int>>): MutableList<Pai
         }
     }
 
-    return lowPointCoordinates
+    return lowPointCoordinates.toList()
 
 }
 
