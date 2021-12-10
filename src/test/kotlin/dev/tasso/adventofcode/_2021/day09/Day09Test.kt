@@ -1,6 +1,5 @@
 package dev.tasso.adventofcode._2021.day09
 
-import dev.tasso.adventofcode._2021.day08.Day08
 import dev.tasso.adventofcode.solutionTest
 import io.kotest.core.spec.style.BehaviorSpec
 
