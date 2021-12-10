@@ -7,6 +7,6 @@ import io.kotest.core.spec.style.BehaviorSpec
 internal class Day09Test : BehaviorSpec({
 
     include(solutionTest(Day09()::part1, 15, "2021/day09_test.txt"))
-//    include(solutionTest(Day09()::part2, 15, "2021/day09_test.txt"))
+    include(solutionTest(Day09()::part2, 1134, "2021/day09_test.txt"))
 
 })

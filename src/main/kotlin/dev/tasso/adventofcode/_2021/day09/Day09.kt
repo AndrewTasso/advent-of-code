@@ -5,7 +5,7 @@ import dev.tasso.adventofcode.Solution
 class Day09 : Solution<Int> {
     override fun part1(input: List<String>): Int {
 
-        val heightMap = input.map{ row -> row.toCharArray().map { it.digitToInt() }.toTypedArray()}.toTypedArray()
+        val heightMap = input.map{ row -> row.toCharArray().map { it.digitToInt() }.toTypedArray() }.toTypedArray()
 
         return determineLowPointCoordinates(heightMap).sumOf {
                 (rowIndex, colIndex) -> heightMap[rowIndex][colIndex] + 1
@@ -14,7 +14,16 @@ class Day09 : Solution<Int> {
     }
 
     override fun part2(input: List<String>): Int {
-        TODO("Not yet implemented")
+
+        val heightMap = input.map{ row -> row.toCharArray().map { it.digitToInt() }.toTypedArray() }.toTypedArray()
+
+        val lowPoints = determineLowPointCoordinates(heightMap)
+
+        return lowPoints.map{ lowPointCoords -> getBasinSize(heightMap, lowPointCoords) }
+                        .sorted()
+                        .takeLast(3)
+                        .reduce { acc, i ->  acc * i }
+
     }
 }
 
@@ -51,4 +60,24 @@ fun getAdjacentCoordinates(heightMap : Array<Array<Int>>, rowIndex : Int, colInd
         if(colIndex < heightMap[0].size-1) Pair(rowIndex, colIndex+1) else null
     )
 
+}
+
+fun getBasinSize(heightMap : Array<Array<Int>>,
+                 coords : Pair<Int,Int>,
+                 visitedSet : MutableSet<Pair<Int, Int>> = mutableSetOf()) :
+        Int {
+
+    return if(heightMap[coords.first][coords.second] == 9 || visitedSet.contains(coords)) {
+
+        0
+
+    }
+    else {
+
+        visitedSet.add(coords)
+
+        1 + getAdjacentCoordinates(heightMap, coords.first, coords.second).sumOf {
+                adjacentCoordinate -> getBasinSize(heightMap, adjacentCoordinate, visitedSet)}
+
+    }
 }
