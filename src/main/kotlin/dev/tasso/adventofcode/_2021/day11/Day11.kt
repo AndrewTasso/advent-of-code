@@ -39,7 +39,42 @@ class Day11 : Solution<Int> {
     }
 
     override fun part2(input: List<String>): Int {
-        TODO("Not yet implemented")
+
+        val energyMap = input.map{ row -> row.toCharArray().map { it.digitToInt() }.toTypedArray() }.toTypedArray()
+        var firstSynchronized = 0
+
+        for(step in 1..Int.MAX_VALUE) {
+
+            val alreadyFlashed : MutableSet<Pair<Int, Int>> = mutableSetOf()
+
+            energyMap.forEachIndexed { rowIndex, row ->
+                row.forEachIndexed { colIndex, _ ->
+
+                    increaseEnergyLevel(energyMap, rowIndex, colIndex, alreadyFlashed)
+
+                }
+            }
+
+            energyMap.forEachIndexed { rowIndex, row ->
+                row.forEachIndexed { colIndex, _ ->
+
+                    if(energyMap[rowIndex][colIndex] > 9 ) {
+                        energyMap[rowIndex][colIndex] = 0
+                    }
+
+                }
+            }
+
+            if (energyMap.all { row -> row.all { energy -> energy == 0 } }) {
+                firstSynchronized = step
+                break
+
+            }
+
+        }
+
+        return firstSynchronized
+
     }
 }
 
