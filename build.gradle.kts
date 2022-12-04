@@ -10,7 +10,7 @@ dependencies {
     implementation(group = "org.jetbrains.kotlin", name = "kotlin-reflect")
 
     testImplementation(kotlin("test"))
-    testImplementation("io.kotest", "kotest-runner-junit5", "4.6.3")
+    testImplementation("io.kotest", "kotest-runner-junit5", "5.5.4")
 }
 
 tasks {

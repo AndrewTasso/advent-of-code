@@ -1,8 +1,14 @@
 package dev.tasso.adventofcode
 
+import io.kotest.core.config.AbstractProjectConfig
+import io.kotest.core.names.DuplicateTestNameMode
 import io.kotest.core.spec.style.behaviorSpec
 import io.kotest.matchers.shouldBe
 
+@Suppress("unused")
+object SilenceDuplicateTestNameWarningsConfig : AbstractProjectConfig() {
+    override val duplicateTestNameMode = DuplicateTestNameMode.Silent
+}
 fun <T> solutionTest(solutionPart: (List<String>) -> T,
                      expectedResult: T,
                      inputResourcePath: String) = behaviorSpec {
@@ -16,7 +22,6 @@ fun <T> solutionTest(solutionPart: (List<String>) -> T,
 
         When("executing the solution") {
             Then("a result of $expectedResult should be received") {
-
 
                 solutionPart(input) shouldBe expectedResult
 
