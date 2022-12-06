@@ -10,10 +10,10 @@ class Day03 : Solution<Int> {
              .map{ it.toList()[0] }
              .sumOf { if (it.isUpperCase()) it.code - 38 else it.code - 96 }
 
-    override fun part2(input: List<String>): Int {
-
-        return 0
-
-    }
+    override fun part2(input: List<String>): Int =
+        input.chunked(3)
+             .map { it[0].toSet().intersect(it[1].toSet()).intersect(it[2].toSet()) }
+             .map { it.toList()[0] }
+             .sumOf { if (it.isUpperCase()) it.code - 38 else it.code - 96 }
 
 }
