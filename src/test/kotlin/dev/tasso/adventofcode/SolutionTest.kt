@@ -17,7 +17,7 @@ fun <T> solutionTest(solutionPart: (List<String>) -> T,
 
         val url = this::class.java.classLoader.getResource(inputResourcePath)
 
-        val input = url?.readText()?.trim()?.split(System.lineSeparator())
+        val input = url?.readText()?.split(System.lineSeparator())?.dropLastWhile{ it == "" }
             ?: throw IllegalArgumentException("Failed to read content of test input file - $inputResourcePath")
 
         When("executing the solution") {
