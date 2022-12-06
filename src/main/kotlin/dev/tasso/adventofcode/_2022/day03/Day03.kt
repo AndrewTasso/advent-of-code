@@ -1,0 +1,19 @@
+package dev.tasso.adventofcode._2022.day03
+
+import dev.tasso.adventofcode.Solution
+
+class Day03 : Solution<Int> {
+
+    override fun part1(input: List<String>): Int =
+        input.map { Pair(it.toCharArray(0, it.length / 2), it.toCharArray(it.length / 2)) }
+             .map { it.first.intersect(it.second.toSet())}
+             .map{ it.toList()[0] }
+             .sumOf { if (it.isUpperCase()) it.code - 38 else it.code - 96 }
+
+    override fun part2(input: List<String>): Int {
+
+        return 0
+
+    }
+
+}
