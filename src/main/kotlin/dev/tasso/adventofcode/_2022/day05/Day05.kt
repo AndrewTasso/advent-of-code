@@ -14,7 +14,6 @@ class Day05 : Solution<String> {
                                   .map{ it.map{ value -> value.toInt()} }
 
         rearrangements.forEach {
-
             for(i in 1..it[0]) {
                 stacks[it[2]-1].push(stacks[it[1]-1].pop())
             }
@@ -25,7 +24,26 @@ class Day05 : Solution<String> {
     }
 
     override fun part2(input: List<String>): String  {
-        return ""
+
+        val stacks = buildStacks(input.subList(0, input.indexOf("")))
+
+        val rearrangements = input.subList(input.indexOf("") + 1, input.size)
+            .map{ it.replaceFirst("move ", "").split(" from ", " to ") }
+            .map{ it.map{ value -> value.toInt()} }
+
+        rearrangements.forEach {
+            val tempStack = ArrayDeque<Char>()
+
+            for(i in 1..it[0]) {
+                tempStack.push(stacks[it[1]-1].pop())
+            }
+            for(i in 1..tempStack.size) {
+                stacks[it[2]-1].push(tempStack.pop())
+            }
+        }
+
+        return stacks.joinToString(separator = "") { it.pop().toString()}
+
     }
 
     private fun buildStacks(rawInput: List<String>): List<ArrayDeque<Char>> {
