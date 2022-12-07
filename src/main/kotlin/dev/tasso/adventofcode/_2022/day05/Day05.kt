@@ -28,8 +28,8 @@ class Day05 : Solution<String> {
         val stacks = buildStacks(input.subList(0, input.indexOf("")))
 
         val rearrangements = input.subList(input.indexOf("") + 1, input.size)
-            .map{ it.replaceFirst("move ", "").split(" from ", " to ") }
-            .map{ it.map{ value -> value.toInt()} }
+                                  .map{ it.replaceFirst("move ", "").split(" from ", " to ") }
+                                  .map{ it.map{ value -> value.toInt()} }
 
         rearrangements.forEach {
             val tempStack = ArrayDeque<Char>()
